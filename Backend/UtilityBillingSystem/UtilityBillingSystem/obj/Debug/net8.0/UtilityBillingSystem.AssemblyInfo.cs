@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UtilityBillingSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3589f09f270e9b0c6d02d5e0a588b2dd3eaef11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90ba4092bf09cd30fbc631b9fdb435ef4ff02c2a")]
 [assembly: System.Reflection.AssemblyProductAttribute("UtilityBillingSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UtilityBillingSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
