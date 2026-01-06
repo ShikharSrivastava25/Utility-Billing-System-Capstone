@@ -1,0 +1,99 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [formControl]="searchControl" placeholder="Search cycles...">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="showCreateForm()">Create Billing Cycle</button>
+</div>
+
+<div class="table-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <table mat-table [dataSource]="dataSource" matSort class="data-table">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cycle Name</th>
+        <td mat-cell *matCellDef="let cycle">{{ cycle.name }}</td>
+      </ng-container>
+
+      <!-- Generation Day Column -->
+      <ng-container matColumnDef="generationDay">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Generation Day</th>
+        <td mat-cell *matCellDef="let cycle">Day {{ formatOrdinal(cycle.generationDay) }} of month</td>
+      </ng-container>
+
+      <!-- Due Date Offset Column -->
+      <ng-container matColumnDef="dueDateOffset">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Due Date Offset</th>
+        <td mat-cell *matCellDef="let cycle">{{ cycle.dueDateOffset }} days</td>
+      </ng-container>
+
+      <!-- Grace Period Column -->
+      <ng-container matColumnDef="gracePeriod">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Grace Period</th>
+        <td mat-cell *matCellDef="let cycle">{{ cycle.gracePeriod }} days</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let cycle">
+          <mat-chip [class.chip-active]="cycle.isActive" [class.chip-inactive]="!cycle.isActive">
+            {{ cycle.isActive ? 'Active' : 'Inactive' }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let cycle">
+          <div class="action-buttons">
+            <button mat-icon-button class="edit-btn" (click)="showEditForm(cycle)" matTooltip="Edit Cycle">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button 
+              mat-icon-button 
+              [class.activate-btn]="!cycle.isActive"
+              [class.deactivate-btn]="cycle.isActive"
+              (click)="toggleStatus(cycle)"
+              [matTooltip]="cycle.isActive ? 'Deactivate Cycle' : 'Activate Cycle'">
+              <mat-icon>{{ cycle.isActive ? 'block' : 'check_circle' }}</mat-icon>
+            </button>
+            <button mat-icon-button class="delete-btn" (click)="deleteCycle(cycle)" matTooltip="Delete Cycle">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Empty State -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <div class="no-data">No billing cycles configured.</div>
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+</div>
+
+@if (isFormVisible()) {
+  <app-billing-cycle-form
+    [cycle]="selectedCycle()" 
+    (close)="hideForm()"
+    (save)="handleSave($event)">
+  </app-billing-cycle-form>
+}

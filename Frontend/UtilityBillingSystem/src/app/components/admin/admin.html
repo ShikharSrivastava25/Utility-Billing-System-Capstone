@@ -1,0 +1,22 @@
+<mat-sidenav-container class="admin-layout">
+  <mat-sidenav mode="side" opened class="sidebar" style="--accent-color: #ab47bc">
+    <app-sidebar 
+      title="Utility Billing" 
+      subtitle="Admin Panel" 
+      [navItems]="navItems()">
+    </app-sidebar>
+  </mat-sidenav>
+  
+  <mat-sidenav-content class="main-content">
+    <header class="main-header">
+      <h1>{{ pageTitle() }}</h1>
+      <div class="user-info">
+        <span>Welcome, {{ currentUser()?.name }}</span>
+        <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+      </div>
+    </header>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

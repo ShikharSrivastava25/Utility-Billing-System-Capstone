@@ -1,0 +1,76 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>{{ isEditMode() ? 'Edit Connection' : 'Create New Connection' }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </header>
+    <form [formGroup]="connectionForm" (ngSubmit)="onSubmit()" class="connection-form" novalidate>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Consumer</mat-label>
+        <mat-select formControlName="userId">
+          @for (consumer of consumers(); track consumer.id) {
+            <mat-option [value]="consumer.id">{{ consumer.name }} ({{ consumer.email }})</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="connectionForm.get('userId')?.hasError('required')">
+          Please select a consumer
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Utility Type</mat-label>
+          <mat-select formControlName="utilityTypeId">
+            @for (utility of utilities(); track utility.id) {
+              <mat-option [value]="utility.id">{{ utility.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="connectionForm.get('utilityTypeId')?.hasError('required')">
+            Please select a utility type
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tariff Plan</mat-label>
+          <mat-select formControlName="tariffId">
+            @for (tariff of availableTariffs(); track tariff.id) {
+              <mat-option [value]="tariff.id">{{ tariff.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="connectionForm.get('tariffId')?.hasError('required')">
+            Please select a tariff plan
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Meter Number</mat-label>
+          <input matInput formControlName="meterNumber" type="text">
+          <mat-error *ngIf="connectionForm.get('meterNumber')?.hasError('required')">
+            Meter number is required
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Active">Active</mat-option>
+            <mat-option value="Inactive">Inactive</mat-option>
+          </mat-select>
+          <mat-error *ngIf="connectionForm.get('status')?.hasError('required')">
+            Please select a status
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <footer class="modal-footer">
+        <button type="button" mat-raised-button (click)="onClose()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="connectionForm.invalid">
+          {{ isEditMode() ? 'Update Connection' : 'Create Connection' }}
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>

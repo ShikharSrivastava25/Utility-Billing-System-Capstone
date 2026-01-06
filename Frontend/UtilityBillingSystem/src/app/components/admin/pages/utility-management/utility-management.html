@@ -1,0 +1,93 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search utilities</mat-label>
+    <input matInput placeholder="Search by name or description..." [formControl]="searchControl">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="showCreateForm()">Create Utility</button>
+</div>
+
+<div class="table-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <table mat-table [dataSource]="dataSource" matSort class="data-table">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let utility">{{ utility.name }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let utility" class="description">{{ utility.description }}</td>
+      </ng-container>
+
+      <!-- Billing Cycle Column -->
+      <ng-container matColumnDef="billingCycleName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Billing Cycle</th>
+        <td mat-cell *matCellDef="let utility">{{ utility.billingCycleName }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let utility">
+          <mat-chip [class.chip-enabled]="utility.status === 'Enabled'" [class.chip-disabled]="utility.status === 'Disabled'">
+            {{ utility.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let utility">
+          <div class="action-buttons">
+            <button mat-icon-button class="edit-btn" (click)="showEditForm(utility)" matTooltip="Edit Utility">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button 
+              mat-icon-button 
+              [class.enable-btn]="utility.status === 'Disabled'"
+              [class.disable-btn]="utility.status === 'Enabled'"
+              (click)="toggleStatus(utility)"
+              [matTooltip]="utility.status === 'Enabled' ? 'Disable Utility' : 'Enable Utility'">
+              <mat-icon>{{ utility.status === 'Enabled' ? 'block' : 'check_circle' }}</mat-icon>
+            </button>
+            <button mat-icon-button class="delete-btn" (click)="deleteUtility(utility)" matTooltip="Delete Utility">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Empty State -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <div class="no-data">No utilities found.</div>
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+  }
+</div>
+
+@if (isFormVisible()) {
+  <app-utility-form
+    [utility]="selectedUtility()" 
+    [billingCycles]="(activeBillingCycles$ | async)!"
+    (close)="hideForm()"
+    (save)="handleSave($event)">
+  </app-utility-form>
+}

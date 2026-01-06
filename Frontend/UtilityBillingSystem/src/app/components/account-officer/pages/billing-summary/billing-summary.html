@@ -1,0 +1,66 @@
+<div class="page-container">
+  <div class="header-actions">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search Consumer</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Search by consumer name...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    @if (isLoading()) {
+      <div class="loading-shade">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    }
+
+    <table mat-table [dataSource]="dataSource" matSort class="summary-table">
+      <ng-container matColumnDef="consumerId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.consumerId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="consumerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer </th>
+        <td mat-cell *matCellDef="let row"> {{row.consumerName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalBilled">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Billed </th>
+        <td mat-cell *matCellDef="let row"> {{row.totalBilled | currency:'INR'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalPaid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Paid </th>
+        <td mat-cell *matCellDef="let row"> {{row.totalPaid | currency:'INR'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="outstandingBalance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Outstanding Balance </th>
+        <td mat-cell *matCellDef="let row"> 
+          <span [class.warning-text]="row.outstandingBalance > 0">
+            {{row.outstandingBalance | currency:'INR'}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="overdueCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Overdue Count </th>
+        <td mat-cell *matCellDef="let row"> 
+          <span class="count-badge" [class.has-overdue]="row.overdueCount > 0">
+            {{row.overdueCount}}
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">No consumer summaries found matching the filter.</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page of summaries"></mat-paginator>
+  </div>
+</div>

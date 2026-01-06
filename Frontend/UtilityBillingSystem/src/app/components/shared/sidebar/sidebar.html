@@ -1,0 +1,14 @@
+<div class="sidebar-header">
+  <h2>{{ title() }}</h2>
+  <p>{{ subtitle() }}</p>
+</div>
+<mat-nav-list class="sidebar-nav">
+  @for (item of navItems(); track item.route) {
+    <mat-list-item [routerLink]="item.route" routerLinkActive="active">
+      @if (item.icon) {
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      }
+      <span matListItemTitle>{{ item.label }}</span>
+    </mat-list-item>
+  }
+</mat-nav-list>

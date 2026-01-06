@@ -1,0 +1,121 @@
+<div class="page-container">
+  <!-- Cycle Info Section -->
+  <div class="cycle-info-grid">
+    @for (cycle of activeCycles(); track cycle.id) {
+      <div class="cycle-card">
+        <div class="cycle-header">
+          <mat-icon color="primary">event_repeat</mat-icon>
+          <h3>{{cycle.name}}</h3>
+        </div>
+        <div class="cycle-details">
+          <div class="detail">
+            <label>Generation Day:</label>
+            <span>{{formatOrdinal(cycle.generationDay)}} of month</span>
+          </div>
+          <div class="detail">
+            <label>Due Date:</label>
+            <span>{{cycle.dueDateOffset}} days after gen</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Pending Bills Section -->
+  <div class="pending-section">
+    <div class="section-header">
+      <h2>Pending Bill Generation</h2>
+      <div class="actions">
+        <button mat-icon-button (click)="loadData()" [disabled]="isLoading()" matTooltip="Refresh">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        @if (!selection.isEmpty()) {
+          <div class="selection-summary">
+            <span>{{selection.selected.length}} Selected</span>
+            <span class="amount">₹{{totalExpectedAmount().toFixed(2)}}</span>
+          </div>
+        }
+        <button mat-stroked-button color="primary" (click)="generateAll()" [disabled]="isLoading() || isGenerating() || dataSource.data.length === 0">
+          Generate All
+        </button>
+        <button mat-raised-button color="primary" (click)="generateSelected()" [disabled]="isLoading() || isGenerating() || selection.isEmpty()">
+          @if (isGenerating()) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            <span>Generate Selected</span>
+          }
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container mat-elevation-z8">
+      @if (isLoading()) {
+        <div class="loading-shade">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="consumerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer </th>
+          <td mat-cell *matCellDef="let row"> {{row.consumerName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="utilityName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+          <td mat-cell *matCellDef="let row"> {{row.utilityName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="meterNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Meter </th>
+          <td mat-cell *matCellDef="let row"> {{row.meterNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="units">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
+          <td mat-cell *matCellDef="let row"> {{row.units}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expectedAmount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Expected Amount </th>
+          <td mat-cell *matCellDef="let row"> ₹{{row.expectedAmount.toFixed(2)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-chip ready">Ready</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="7">
+            <div class="no-data-message">
+              <p>No pending readings found for bill generation.</p>
+              <p class="hint">Note: Readings will only appear here if the connection has an active tariff assigned.</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

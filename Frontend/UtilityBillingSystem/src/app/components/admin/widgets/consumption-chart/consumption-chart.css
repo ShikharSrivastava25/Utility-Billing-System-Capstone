@@ -1,0 +1,51 @@
+:host {
+  display: block;
+}
+
+.chart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-height: 250px;
+}
+
+.chart-container {
+  flex-shrink: 0;
+}
+
+.legend-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.legend-label {
+  color: #e0e0e0;
+  flex-grow: 1;
+}
+
+.legend-value {
+  color: #fff;
+  font-weight: 500;
+}
+
+.no-data {
+  color: #8a8a93;
+  text-align: center;
+  width: 100%;
+  font-style: italic;
+}

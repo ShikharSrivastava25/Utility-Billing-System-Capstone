@@ -1,0 +1,15 @@
+<div class="chart-wrapper">
+  <div #chart class="chart-container"></div>
+  <div class="legend-container">
+    @for (item of data(); track item.utilityName) {
+      <div class="legend-item">
+        <span class="legend-color" [style.background-color]="getColor(item.utilityName)"></span>
+        <span class="legend-label">{{ item.utilityName }}</span>
+        <span class="legend-value">{{ getPercentage(item.consumption) }}</span>
+      </div>
+    }
+    @if (!data() || data().length === 0) {
+      <div class="no-data">No consumption data available.</div>
+    }
+  </div>
+</div>

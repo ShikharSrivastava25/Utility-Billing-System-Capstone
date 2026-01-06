@@ -1,0 +1,52 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>Notifications</h2>
+    <div class="header-actions">
+      @if (notifications().length > 0) {
+        <button mat-button (click)="markAllAsRead()" class="mark-all-read-btn">
+          <mat-icon>delete_sweep</mat-icon>
+          Clear all
+        </button>
+      }
+      <button mat-icon-button (click)="close()" class="close-btn" title="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="32" strokeWidth="3"></mat-spinner>
+      </div>
+    } @else if (notifications().length === 0) {
+      <div class="empty-state">
+        <mat-icon>notifications_off</mat-icon>
+        <p>You're all caught up!</p>
+        <span style="font-size: 0.85rem; opacity: 0.6; margin-top: 8px;">No new notifications to show.</span>
+      </div>
+    } @else {
+      <mat-list class="notification-list">
+        @for (notification of notifications(); track notification.id) {
+          <mat-list-item 
+            [class.unread]="!notification.isRead"
+            (click)="markAsRead(notification)">
+            <div class="notification-item">
+              <div class="notification-content">
+                <div class="notification-header">
+                  <h3 class="notification-title">{{ notification.title }}</h3>
+                  @if (!notification.isRead) {
+                    <span class="unread-indicator"></span>
+                  }
+                </div>
+                <p class="notification-message">{{ notification.message }}</p>
+                <span class="notification-time">{{ formatDate(notification.createdAt) }}</span>
+              </div>
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+    }
+  </mat-dialog-content>
+</div>
+

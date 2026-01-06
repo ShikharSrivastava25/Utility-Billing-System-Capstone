@@ -1,0 +1,63 @@
+mat-card.summary-card {
+  background-color: #2c2c34 !important;
+  border-radius: 8px !important;
+  border-left: 5px solid #fff; /* Default */
+  border-top: none !important; /* Override global mat-card border-top */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  padding: 20px !important;
+}
+
+mat-card.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+}
+
+mat-card.summary-card mat-card-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.card-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content .title {
+  margin: 0 0 6px 0;
+  color: #a0a0a0;
+  font-size: 0.85rem;
+}
+
+.card-content .value {
+  margin: 0;
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.value .unit {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #ccc;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+  color: #e0e0e0;
+  line-height: 1;
+}
+
+/* Themes - Using more specific selectors to override global styles */
+mat-card.summary-card.purple { border-left-color: #ab47bc !important; }
+mat-card.summary-card.orange { border-left-color: #fb8c00 !important; }
+mat-card.summary-card.cyan { border-left-color: #00bcd4 !important; }
+mat-card.summary-card.green { border-left-color: #66bb6a !important; }
+mat-card.summary-card.pink { border-left-color: #e91e63 !important; }
+mat-card.summary-card.blue { border-left-color: #2196f3 !important; }
+mat-card.summary-card.yellow { border-left-color: #fdd835 !important; }

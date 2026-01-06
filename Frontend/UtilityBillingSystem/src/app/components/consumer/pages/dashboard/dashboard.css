@@ -1,0 +1,242 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+@media (max-width: 1280px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .welcome-section {
+    margin-bottom: 24px;
+  }
+  
+  .welcome-section p {
+    font-size: 1rem;
+  }
+  
+  .summary-card {
+    padding: 16px !important;
+  }
+  
+  .card-content .title {
+    font-size: 0.85rem;
+  }
+  
+  .card-content .value {
+    font-size: 1.5rem;
+  }
+  
+  .card-icon {
+    font-size: 2rem;
+  }
+  
+  .chart-section {
+    margin-top: 16px;
+  }
+  
+  .chart-card {
+    padding: 12px;
+  }
+  
+  .chart-container {
+    height: 250px;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .dashboard-container {
+    padding: 32px;
+  }
+  
+  .welcome-section {
+    margin-bottom: 40px;
+  }
+  
+  .welcome-section p {
+    font-size: 1.2rem;
+  }
+  
+  .summary-card {
+    padding: 28px !important;
+  }
+  
+  .card-content .title {
+    font-size: 1rem;
+  }
+  
+  .card-content .value {
+    font-size: 2rem;
+  }
+  
+  .card-icon {
+    font-size: 3rem;
+  }
+  
+  .chart-section {
+    margin-top: 32px;
+  }
+  
+  .chart-card {
+    padding: 24px;
+  }
+  
+  .chart-container {
+    height: 350px;
+    padding: 16px;
+  }
+}
+
+.welcome-section {
+  margin-bottom: 30px;
+}
+
+.welcome-section p {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 1280px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
+  }
+}
+
+.summary-card {
+  background-color: #2c2c34 !important;
+  border-radius: 8px !important;
+  border-left: 5px solid #fff;
+  border-top: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  padding: 20px !important;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+}
+
+.summary-card mat-card-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.card-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content .title {
+  margin: 0 0 6px 0;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.card-content .value {
+  margin: 0;
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  opacity: 0.5;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Themes */
+.summary-card.pink { border-left-color: #e91e63 !important; }
+.summary-card.pink .card-icon { color: #e91e63; opacity: 0.6; }
+
+.summary-card.orange { border-left-color: #fb8c00 !important; }
+.summary-card.orange .card-icon { color: #fb8c00; opacity: 0.6; }
+
+.summary-card.blue { border-left-color: #2196f3 !important; }
+.summary-card.blue .card-icon { color: #2196f3; opacity: 0.6; }
+
+.summary-card.green { border-left-color: #4caf50 !important; }
+.summary-card.green .card-icon { color: #4caf50; opacity: 0.6; }
+
+.chart-section {
+  margin-top: 20px;
+}
+
+.chart-card {
+  background-color: #2c2c34 !important;
+  color: #fff !important;
+  padding: 16px;
+}
+
+.chart-card mat-card-subtitle {
+  color: #aaa !important;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+  background-color: #1f1f23;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+:host ::ng-deep .line {
+  fill: none;
+  stroke: #4caf50;
+  stroke-width: 3;
+}
+
+:host ::ng-deep .axis-label {
+  fill: #aaa;
+  font-size: 12px;
+}
+
+:host ::ng-deep .grid line {
+  stroke: #333;
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+}
+
+:host ::ng-deep .grid path {
+  stroke-width: 0;
+}
+
+:host ::ng-deep .domain {
+  stroke: #444;
+}
+
+:host ::ng-deep .tick line {
+  stroke: #444;
+}
+
+:host ::ng-deep .tick text {
+  fill: #aaa;
+}

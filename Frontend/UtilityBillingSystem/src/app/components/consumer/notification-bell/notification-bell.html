@@ -1,0 +1,12 @@
+<button 
+  mat-icon-button 
+  (click)="openNotificationDialog()"
+  class="notification-bell-button"
+  [matBadge]="unreadCount()"
+  [matBadgeHidden]="unreadCount() === 0"
+  matBadgeColor="warn"
+  matBadgeOverlap="true"
+  [attr.aria-label]="'Notifications' + (unreadCount() > 0 ? ' (' + unreadCount() + ' unread)' : '')">
+  <mat-icon>notifications</mat-icon>
+</button>
+

@@ -1,0 +1,89 @@
+<div class="page-container">
+  <div class="header-actions">
+    <h2>Request New Utility Connection</h2>
+    @if (!isFormVisible()) {
+      <button mat-raised-button color="primary" (click)="isFormVisible.set(true)">
+        <mat-icon>add</mat-icon> New Service Request
+      </button>
+    }
+  </div>
+
+  @if (isFormVisible()) {
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title class="titl">Request a New Utility Service</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Utility Type</mat-label>
+            <mat-select formControlName="utilityTypeId">
+              @if (availableUtilities$ | async; as utilities) {
+                @for (utility of utilities; track utility.id) {
+                  <mat-option [value]="utility.id">{{ utility.name }}</mat-option>
+                }
+                @if (utilities.length === 0) {
+                  <mat-option disabled>No new services available</mat-option>
+                }
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="isFormVisible.set(false)">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="requestForm.invalid">
+              Submit Request
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <div class="table-header">
+    <h3>My Requests</h3>
+  </div>
+
+  <div class="request-table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="request-table">
+      <!-- Utility Name Column -->
+      <ng-container matColumnDef="utilityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Requested </th>
+        <td mat-cell *matCellDef="let req"> {{ req.utilityName }} </td>
+      </ng-container>
+
+      <!-- Request Date Column -->
+      <ng-container matColumnDef="requestDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Request Date </th>
+        <td mat-cell *matCellDef="let req"> {{ req.requestDate | date:'mediumDate' }} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let req">
+          <mat-chip [class]="'status-chip ' + req.status.toLowerCase()">
+            {{ req.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Decision Date Column -->
+      <ng-container matColumnDef="decisionDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Decision Date </th>
+        <td mat-cell *matCellDef="let req"> {{ (req.decisionDate | date:'mediumDate') || 'N/A' }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4" style="padding: 20px; text-align: center; color: #aaa;">
+          You have not made any service requests.
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Select page of requests"></mat-paginator>
+  </div>
+</div>

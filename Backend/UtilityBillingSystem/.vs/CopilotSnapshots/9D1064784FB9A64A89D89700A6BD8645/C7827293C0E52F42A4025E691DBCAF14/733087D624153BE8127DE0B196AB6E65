@@ -1,0 +1,208 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using UtilityBillingSystem.Models;
+
+namespace UtilityBillingSystem.Data
+{
+    public class DataSeeder
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly AppDbContext _context;
+
+        public DataSeeder(IServiceProvider serviceProvider, AppDbContext context)
+        {
+            _serviceProvider = serviceProvider;
+            _context = context;
+        }
+
+        public async Task SeedDataAsync()
+        {
+            // Ensure database is created (migrations should be applied separately)
+            if (_context.Database.GetPendingMigrations().Any())
+            {
+                await _context.Database.MigrateAsync();
+            }
+
+            try
+            {
+                await SeedRolesAndUsersAsync();
+                await SeedBillingCyclesAsync();
+                await SeedUtilityTypesAsync();
+                await SeedTariffsAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the error but don't crash the application
+                Console.WriteLine($"Error seeding data: {ex.Message}");
+                // If there's a foreign key issue, the database might need to be reset
+                // You can uncomment the following line to drop and recreate the database
+                // await _context.Database.EnsureDeletedAsync();
+                // await _context.Database.MigrateAsync();
+                throw;
+            }
+        }
+
+        private async Task SeedRolesAndUsersAsync()
+        {
+            var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string[] roleNames = { "Admin", "Billing Officer", "Account Officer", "Consumer" };
+            
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            // Seed Admin user
+            User? adminUser = await userManager.FindByEmailAsync("admin@example.com");
+            if (adminUser == null)
+            {
+                adminUser = new User
+                {
+                    UserName = "admin@example.com",
+                    Email = "admin@example.com",
+                    EmailConfirmed = true,
+                    FullName = "Admin User",
+                    Status = "Active"
+                };
+                var createResult = await userManager.CreateAsync(adminUser, "Test@123");
+                if (!createResult.Succeeded)
+                {
+                    throw new Exception($"Failed to create admin user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                }
+                // Reload the user to ensure it's properly tracked
+                adminUser = await userManager.FindByEmailAsync("admin@example.com");
+            }
+            if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
+            {
+                var roleResult = await userManager.AddToRoleAsync(adminUser, "Admin");
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception($"Failed to add Admin role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+
+            // Seed Billing Officer user
+            User? billingOfficerUser = await userManager.FindByEmailAsync("billing@example.com");
+            if (billingOfficerUser == null)
+            {
+                billingOfficerUser = new User
+                {
+                    UserName = "billing@example.com",
+                    Email = "billing@example.com",
+                    EmailConfirmed = true,
+                    FullName = "Bill Officer",
+                    Status = "Active"
+                };
+                var createResult = await userManager.CreateAsync(billingOfficerUser, "Test@123");
+                if (!createResult.Succeeded)
+                {
+                    throw new Exception($"Failed to create billing officer user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                }
+                // Reload the user to ensure it's properly tracked
+                billingOfficerUser = await userManager.FindByEmailAsync("billing@example.com");
+            }
+            if (billingOfficerUser != null && !await userManager.IsInRoleAsync(billingOfficerUser, "Billing Officer"))
+            {
+                var roleResult = await userManager.AddToRoleAsync(billingOfficerUser, "Billing Officer");
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception($"Failed to add Billing Officer role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+
+            // Seed sample Consumer
+            User? consumerUser = await userManager.FindByEmailAsync("consumer@example.com");
+            if (consumerUser == null)
+            {
+                consumerUser = new User
+                {
+                    UserName = "consumer@example.com",
+                    Email = "consumer@example.com",
+                    EmailConfirmed = true,
+                    FullName = "Connie Sumer",
+                    Status = "Active"
+                };
+                var createResult = await userManager.CreateAsync(consumerUser, "Test@123");
+                if (!createResult.Succeeded)
+                {
+                    throw new Exception($"Failed to create consumer user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                }
+                // Reload the user to ensure it's properly tracked
+                consumerUser = await userManager.FindByEmailAsync("consumer@example.com");
+            }
+            if (consumerUser != null && !await userManager.IsInRoleAsync(consumerUser, "Consumer"))
+            {
+                var roleResult = await userManager.AddToRoleAsync(consumerUser, "Consumer");
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception($"Failed to add Consumer role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+        }
+
+        private async Task SeedUtilityTypesAsync()
+        {
+            if (!await _context.UtilityTypes.AnyAsync())
+            {
+                var billingCycle = await _context.BillingCycles.FirstOrDefaultAsync();
+                var billingCycleId = billingCycle?.Id;
+
+                var utilities = new[]
+                {
+                    new UtilityType { Name = "Electricity", Description = "Power supply services for residential and commercial use.", Status = "Enabled", BillingCycleId = billingCycleId },
+                    new UtilityType { Name = "Water", Description = "Municipal water supply and sanitation services.", Status = "Enabled", BillingCycleId = billingCycleId },
+                    new UtilityType { Name = "Gas", Description = "Natural gas for heating, cooking, and industrial purposes.", Status = "Disabled" },
+                    new UtilityType { Name = "Internet", Description = "High-speed fiber optic internet connectivity.", Status = "Enabled", BillingCycleId = billingCycleId }
+                };
+
+                _context.UtilityTypes.AddRange(utilities);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task SeedBillingCyclesAsync()
+        {
+            if (!await _context.BillingCycles.AnyAsync())
+            {
+                var cycles = new[]
+                {
+                    new BillingCycle { Name = "Standard Monthly Cycle", GenerationDay = 1, DueDateOffset = 15, GracePeriod = 5, IsActive = true },
+                    new BillingCycle { Name = "Mid-Month Cycle", GenerationDay = 15, DueDateOffset = 10, GracePeriod = 3, IsActive = false }
+                };
+
+                _context.BillingCycles.AddRange(cycles);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task SeedTariffsAsync()
+        {
+            if (!await _context.Tariffs.AnyAsync())
+            {
+                var electricity = await _context.UtilityTypes.FirstOrDefaultAsync(u => u.Name == "Electricity");
+                var water = await _context.UtilityTypes.FirstOrDefaultAsync(u => u.Name == "Water");
+                var internet = await _context.UtilityTypes.FirstOrDefaultAsync(u => u.Name == "Internet");
+
+                if (electricity != null && water != null && internet != null)
+                {
+                    var tariffs = new[]
+                    {
+                        new Tariff { Name = "Residential Standard", UtilityTypeId = electricity.Id, BaseRate = 6, FixedCharge = 50, TaxPercentage = 5, CreatedAt = new DateTime(2023, 1, 1), IsActive = true },
+                        new Tariff { Name = "Commercial Standard", UtilityTypeId = electricity.Id, BaseRate = 8.5m, FixedCharge = 150, TaxPercentage = 7.5m, CreatedAt = new DateTime(2023, 1, 1), IsActive = false },
+                        new Tariff { Name = "Residential Water Plan", UtilityTypeId = water.Id, BaseRate = 25, FixedCharge = 100, TaxPercentage = 2, CreatedAt = new DateTime(2023, 6, 1), IsActive = true },
+                        new Tariff { Name = "FiberNet 100Mbps", UtilityTypeId = internet.Id, BaseRate = 0, FixedCharge = 799, TaxPercentage = 18, CreatedAt = new DateTime(2023, 4, 1), IsActive = true }
+                    };
+
+                    _context.Tariffs.AddRange(tariffs);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+    }
+}

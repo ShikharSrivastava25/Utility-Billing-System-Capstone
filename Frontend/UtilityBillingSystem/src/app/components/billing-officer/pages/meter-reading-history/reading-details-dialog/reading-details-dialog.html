@@ -1,0 +1,80 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h3>Reading Details</h3>
+    <button mat-icon-button (click)="close()" type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  @if (reading; as reading) {
+    <div class="dialog-body">
+      <div class="details-grid">
+      <div class="detail-item">
+        <label>Consumer</label>
+        <span>{{reading.consumerName}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Utility</label>
+        <span>{{reading.utilityName}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Meter Number</label>
+        <span>{{reading.meterNumber}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Reading Date</label>
+        <span>{{reading.readingDate | date}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Previous Reading</label>
+        <span>{{reading.previousReading}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Status</label>
+        <span [class.status-billed]="reading.status === 'Billed'" [class.status-ready]="reading.status === 'ReadyForBilling'">
+          {{reading.status === 'Billed' ? 'Billed' : 'Ready for Billing'}}
+        </span>
+      </div>
+    </div>
+
+    <div class="edit-section">
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Current Reading</mat-label>
+          <input matInput type="number" formControlName="currentReading" [readonly]="!isEditMode || reading.status === 'Billed'">
+          @if (editForm.get('currentReading')?.hasError('min')) {
+            <mat-error>
+              Must be at least {{reading.previousReading}}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="consumption-display">
+          <label>Calculated Consumption:</label>
+          <span class="units">{{editForm.value.currentReading - reading.previousReading}} Units</span>
+        </div>
+
+        <div class="dialog-actions">
+          <button mat-button type="button" (click)="close()">Close</button>
+          
+          @if (reading.status !== 'Billed') {
+            @if (!isEditMode) {
+              <button mat-raised-button color="primary" type="button" (click)="toggleEdit()">
+                Edit Reading
+              </button>
+            } @else {
+              <button mat-raised-button color="accent" type="submit" [disabled]="editForm.invalid || isLoading">
+                @if (isLoading) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  <span>Save Changes</span>
+                }
+              </button>
+            }
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+}
+</div>

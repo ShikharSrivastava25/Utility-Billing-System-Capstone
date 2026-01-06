@@ -1,0 +1,5 @@
+@if (showLogin()) {
+  <app-login (toggleView)="toggleView()"></app-login>
+} @else {
+  <app-register (toggleView)="toggleView()"></app-register>
+}

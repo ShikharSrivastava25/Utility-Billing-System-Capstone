@@ -1,0 +1,152 @@
+.auth-container {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1000px;
+  width: 100%;
+  justify-content: center;
+}
+
+.brand-section {
+  flex: 1;
+  text-align: left;
+}
+
+.system-title {
+  color: rgb(187, 134, 252);
+  font-size: 48px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.catchphrase {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  margin-top: 16px;
+  font-weight: 400;
+}
+
+.register-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 32px;
+  background-color: rgb(30, 30, 30) !important;
+  border-top: 4px solid rgb(187, 134, 252);
+  border-radius: 12px;
+}
+
+h2 {
+  text-align: center;
+  color: rgb(255, 255, 255);
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+@media (max-width: 1280px) {
+  .auth-container {
+    gap: 40px;
+    max-width: 900px;
+  }
+
+  .system-title {
+    font-size: 40px;
+  }
+
+  .catchphrase {
+    font-size: 18px;
+  }
+
+  .register-card {
+    max-width: 360px;
+    padding: 28px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .auth-container {
+    gap: 80px;
+    max-width: 1200px;
+  }
+
+  .system-title {
+    font-size: 56px;
+  }
+
+  .catchphrase {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+
+  .register-card {
+    max-width: 450px;
+    padding: 40px;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 32px;
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.error-message {
+  color: rgb(255, 82, 82);
+  font-size: 12px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  padding-left: 4px;
+  font-weight: 500;
+}
+
+button.full-width:disabled {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  cursor: not-allowed;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.error-text {
+  color: rgb(255, 82, 82);
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.success-text {
+  color: rgb(3, 218, 198);
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-link a {
+  color: rgb(3, 218, 198);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,190 @@
+<div class="reports-dashboard">
+  <header class="reports-header">
+    <h2>Dashboard Overview</h2>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  } @else {
+    <div class="summary-grid">
+      <app-summary-card 
+        title="Total Revenue" 
+        [value]="totalRevenue()"
+        icon="currency"
+        theme="pink">
+      </app-summary-card>
+      <app-summary-card 
+        title="Outstanding Dues" 
+        [value]="outstandingDues()"
+        icon="currency"
+        theme="orange">
+      </app-summary-card>
+      <app-summary-card 
+        title="Total Consumption" 
+        [value]="totalConsumption()"
+        unit="Units"
+        icon="bolt"
+        theme="yellow">
+      </app-summary-card>
+      <app-summary-card 
+        title="Unpaid Bills" 
+        [value]="unpaidBillsCount()"
+        icon="bolt"
+        theme="orange">
+      </app-summary-card>
+    </div>
+
+    <div class="reports-grid">
+      <div class="report-widget">
+        <div class="widget-header">
+          <h3>Revenue per Month</h3>
+          <button mat-icon-button class="reset-filter-btn" type="button" (click)="resetRevenueFilters()" matTooltip="Reset Filters">
+            <mat-icon>restart_alt</mat-icon>
+          </button>
+        </div>
+
+        <form [formGroup]="filterForm" class="stacked-filters">
+          <mat-radio-group formControlName="filterType" class="compact-radio-group">
+            <mat-radio-button value="monthYear">Month/Year</mat-radio-button>
+            <mat-radio-button value="dateRange">Date Range</mat-radio-button>
+          </mat-radio-group>
+
+          <div class="filter-inputs">
+            @if (filterForm.get('filterType')?.value === 'monthYear') {
+              <mat-form-field appearance="outline" class="compact-field">
+                <mat-icon matPrefix>calendar_month</mat-icon>
+                <mat-select formControlName="selectedMonth" placeholder="Month">
+                  @for (month of months; track month.value) {
+                    <mat-option [value]="month.value">{{ month.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="compact-field">
+                <mat-icon matPrefix>event</mat-icon>
+                <mat-select formControlName="selectedYear" placeholder="Year">
+                  @for (year of years; track year) {
+                    <mat-option [value]="year">{{ year }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
+
+            @if (filterForm.get('filterType')?.value === 'dateRange') {
+              <mat-form-field appearance="outline" class="date-range-field compact-field">
+                <mat-icon matPrefix>date_range</mat-icon>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="startDate" placeholder="Start">
+                  <input matEndDate formControlName="endDate" placeholder="End">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            }
+          </div>
+        </form>
+
+        <app-monthly-revenue-table 
+          [data]="monthlyRevenue()" 
+          [isLoading]="isRevenueLoading()">
+        </app-monthly-revenue-table>
+      </div>
+
+      <div class="report-widget">
+        <h3>Outstanding Dues by Utility</h3>
+        <div class="table-container">
+          <table mat-table [dataSource]="outstandingDataSource" matSort #outstandingSort="matSort" class="revenue-table">
+            <ng-container matColumnDef="utilityName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+              <td mat-cell *matCellDef="let element"> {{element.utilityName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="outstandingAmount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Outstanding Amount </th>
+              <td mat-cell *matCellDef="let element"> {{element.outstandingAmount | currency:'INR'}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="outstandingColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: outstandingColumns;"></tr>
+          </table>
+          <mat-paginator #outstandingPaginator [pageSizeOptions]="[5, 10]" [pageSize]="5" [showFirstLastButtons]="false" aria-label="Select page of outstanding dues"></mat-paginator>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-width-report">
+      <div class="report-widget">
+        <h3>Average Consumption</h3>
+        <div class="table-container">
+          @if (isAvgConsumptionLoading()) {
+            <div class="loading-spinner">
+              <mat-spinner diameter="40"></mat-spinner>
+            </div>
+          } @else {
+            <table mat-table [dataSource]="avgConsumptionDataSource" matSort #avgConsumptionSort="matSort" class="revenue-table">
+              <!-- Utility Column -->
+              <ng-container matColumnDef="utilityName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+                <td mat-cell *matCellDef="let element"> {{element.utilityName}} </td>
+              </ng-container>
+
+              <!-- Average Consumption Column -->
+              <ng-container matColumnDef="averageConsumption">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg. Consumption </th>
+                <td mat-cell *matCellDef="let element"> {{element.averageConsumption | number:'1.2-2'}} Units </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="avgConsumptionColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: avgConsumptionColumns;"></tr>
+            </table>
+            <mat-paginator #avgConsumptionPaginator [pageSizeOptions]="[5, 10]" [pageSize]="5" [showFirstLastButtons]="false" aria-label="Select page of average consumption"></mat-paginator>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="full-width-report">
+      <div class="report-widget">
+        <h3>Consumption Trends</h3>
+        @if (consumptionByUtility().length > 0) {
+          <app-consumption-chart [data]="consumptionByUtility()"></app-consumption-chart>
+        } @else {
+          <div class="placeholder-chart">Loading chart data...</div>
+        }
+      </div>
+    </div>
+
+    <div class="full-width-report">
+      <div class="report-widget">
+        <h3>Recent Payments</h3>
+        <div class="table-container">
+          <table mat-table [dataSource]="recentPaymentsDataSource" matSort #recentSort="matSort" class="revenue-table">
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.date | date:'mediumDate'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="consumerName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer </th>
+              <td mat-cell *matCellDef="let element"> {{element.consumerName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="utilityName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+              <td mat-cell *matCellDef="let element"> {{element.utilityName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+              <td mat-cell *matCellDef="let element"> {{element.amount | currency:'INR'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="method">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Method </th>
+              <td mat-cell *matCellDef="let element"> {{element.method}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="recentPaymentsColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: recentPaymentsColumns;"></tr>
+          </table>
+          <mat-paginator #recentPaginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" [showFirstLastButtons]="false" aria-label="Select page of recent payments"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  }
+</div>

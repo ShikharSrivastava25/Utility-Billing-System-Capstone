@@ -1,0 +1,73 @@
+:host {
+  display: block;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+}
+
+.chart {
+  width: 100%;
+  height: 400px;
+}
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #8a8a93;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* D3 chart styles */
+:host ::ng-deep .grid line {
+  stroke: #4a4a52;
+  stroke-width: 1;
+}
+
+:host ::ng-deep .grid path {
+  stroke-width: 0;
+}
+
+:host ::ng-deep .axis {
+  color: #e0e0e0;
+}
+
+:host ::ng-deep .axis text {
+  fill: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  font-family: inherit !important;
+}
+
+:host ::ng-deep .axis path,
+:host ::ng-deep .axis line {
+  fill: none;
+  stroke: #6a6a72 !important;
+  stroke-width: 1.5;
+  shape-rendering: crispEdges;
+}
+
+:host ::ng-deep .axis g.tick text {
+  fill: #ffffff !important;
+  font-size: 13px !important;
+}
+
+:host ::ng-deep .bar {
+  transition: opacity 0.3s ease;
+}
+
+:host ::ng-deep .bar:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+:host ::ng-deep .bar-label {
+  pointer-events: none;
+}
+

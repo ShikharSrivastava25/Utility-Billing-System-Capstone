@@ -1,0 +1,81 @@
+<div class="page-wrapper" [@pageTransition]="isRedirecting() ? 'hidden' : 'visible'">
+  <div class="auth-container">
+    <div class="brand-section">
+      <h1 class="system-title">Utility Billing System</h1>
+      <p class="catchphrase">Efficient Billing, Seamless Living</p>
+    </div>
+
+    <mat-card class="register-card">
+      <h2>Create Account</h2>
+
+      <form [formGroup]="registerForm" (ngSubmit)="submit()">
+
+      <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Your full name">
+      </mat-form-field>
+      @if (registerForm.controls.name.errors?.['required'] && registerForm.controls.name.touched) {
+        <div class="error-message">Name is required</div>
+      }
+
+      <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="example@mail.com">
+      </mat-form-field>
+      @if (registerForm.controls.email.touched) {
+        @if (registerForm.controls.email.errors?.['required']) {
+          <div class="error-message">Email is required</div>
+        } @else if (registerForm.controls.email.errors?.['email']) {
+          <div class="error-message">Please enter a valid email address</div>
+        }
+      }
+
+      <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" placeholder="Min 6 characters">
+        <button mat-icon-button matSuffix (click)="hidePassword.set(!hidePassword())" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword()" type="button">
+          <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      @if (registerForm.controls.password.touched) {
+        @if (registerForm.controls.password.errors?.['required']) {
+          <div class="error-message">Password is required</div>
+        } @else if (registerForm.controls.password.errors?.['minlength']) {
+          <div class="error-message">Password must be at least 6 characters</div>
+        }
+      }
+
+      <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [type]="hideConfirmPassword() ? 'password' : 'text'" formControlName="confirmPassword" placeholder="Repeat your password">
+        <button mat-icon-button matSuffix (click)="hideConfirmPassword.set(!hideConfirmPassword())" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword()" type="button">
+          <mat-icon>{{hideConfirmPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      @if (registerForm.controls.confirmPassword.touched) {
+        @if (registerForm.controls.confirmPassword.errors?.['required']) {
+          <div class="error-message">Please confirm your password</div>
+        } @else if (registerForm.errors?.['passwordMismatch']) {
+          <div class="error-message">Passwords do not match</div>
+        }
+      }
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+      @if (success()) {
+        <p class="success-text">{{ success() }}</p>
+      }
+
+      <button mat-raised-button color="accent" class="full-width" type="submit" [disabled]="registerForm.invalid">
+        Register
+      </button>
+
+      <p class="login-link">
+        Already have an account? <a routerLink="/auth">Login</a>
+      </p>
+
+    </form>
+  </mat-card>
+  </div>
+</div>

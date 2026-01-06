@@ -1,0 +1,148 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+}
+
+.revenue-table {
+  width: 100%;
+  background: transparent !important;
+}
+
+::ng-deep .revenue-table .mat-mdc-header-cell {
+  background-color: #383842 !important;
+  color: #fff !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #4a4a52 !important;
+}
+
+::ng-deep .revenue-table .mat-sort-header-arrow {
+  color: #fff !important;
+}
+
+::ng-deep .revenue-table .mat-mdc-cell {
+  color: #e0e0e0 !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #4a4a52 !important;
+}
+
+.revenue-table tr {
+  height: 48px !important;
+}
+
+::ng-deep .revenue-table .mat-mdc-row:hover {
+  background-color: #34343c !important;
+}
+
+.loading-spinner {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8a8a93;
+}
+
+.empty-state {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8a8a93;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+::ng-deep .mat-mdc-paginator {
+  background-color: #2c2c34 !important;
+  color: #e0e0e0 !important;
+  border-top: 1px solid #4a4a52;
+  margin-top: auto;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-select-value,
+::ng-deep .mat-mdc-paginator .mat-mdc-paginator-range-label {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-icon-button {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-icon-button:disabled {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  justify-content: flex-end !important;
+  padding: 0 16px !important;
+  min-height: 56px !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size {
+  align-items: center !important;
+  margin-right: 24px !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+  margin: 0 8px 0 0 !important;
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-select {
+  margin: 0 !important;
+  width: 64px !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-text-field-wrapper {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  min-height: unset !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-select {
+  border: 1px solid #4a4a52 !important;
+  border-radius: 4px !important;
+  padding: 6px 12px !important;
+  background-color: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-select-arrow-wrapper {
+  padding-left: 4px !important;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-paginator .mdc-line-ripple {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-paginator-range-label {
+  margin: 0 24px 0 0 !important;
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-paginator-range-actions {
+  display: flex !important;
+  align-items: center !important;
+}
+

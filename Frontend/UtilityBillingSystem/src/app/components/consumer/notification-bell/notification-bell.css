@@ -1,0 +1,26 @@
+.notification-bell-button {
+  color: #e0e0e0;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+}
+
+.notification-bell-button:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+::ng-deep .notification-bell-button .mat-mdc-badge-content {
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  line-height: 14px; /* Adjusted for better vertical centering with border */
+  border: 2px solid #1e1e1e;
+  top: 10px !important;
+  right: 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

@@ -1,0 +1,90 @@
+<div class="page-container">
+  <div class="header-actions">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search Outstanding Bills</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Search by consumer, utility or month...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-button-toggle-group [formControl]="statusFilter" aria-label="Status Filter" class="status-toggle">
+      <mat-button-toggle value="all">All</mat-button-toggle>
+      <mat-button-toggle value="due">Due</mat-button-toggle>
+      <mat-button-toggle value="overdue">Overdue</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    @if (isLoading()) {
+      <div class="loading-shade">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    }
+
+    <table mat-table [dataSource]="dataSource" matSort class="outstanding-table">
+      <!-- Consumer ID Column -->
+      <ng-container matColumnDef="consumerId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.consumerId}} </td>
+      </ng-container>
+
+      <!-- Consumer Column -->
+      <ng-container matColumnDef="consumerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer </th>
+        <td mat-cell *matCellDef="let row"> {{row.consumerName}} </td>
+      </ng-container>
+
+      <!-- Utility Column -->
+      <ng-container matColumnDef="utilityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+        <td mat-cell *matCellDef="let row"> {{row.utilityName}} </td>
+      </ng-container>
+
+      <!-- Bill Month Column -->
+      <ng-container matColumnDef="billMonth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill Month </th>
+        <td mat-cell *matCellDef="let row"> {{row.billMonth}} </td>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td mat-cell *matCellDef="let row"> {{row.amount | currency:'INR'}} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let row"> 
+          <span class="status-chip" [ngClass]="row.status.toLowerCase()">
+            {{row.status}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Due Date Column -->
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.dueDate | date:'mediumDate'}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="viewBillDetails(row)" title="View Bill Details" class="action-button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="8">No outstanding bills found matching the criteria.</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page of bills"></mat-paginator>
+  </div>
+</div>

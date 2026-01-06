@@ -1,0 +1,151 @@
+@import 'ngx-toastr/toastr';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(26, 28, 30);
+  color: rgb(224, 224, 224);
+}
+
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints for laptop and desktop screens */
+@media (max-width: 1280px) {
+  .page-wrapper {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .page-wrapper {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .page-wrapper {
+    padding: 40px;
+  }
+}
+
+mat-card {
+  background-color: rgb(30, 30, 30) !important;
+  color: rgb(255, 255, 255) !important;
+  border-top: 4px solid #bb86fc;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+mat-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mat-sort-header-arrow {
+  color: rgb(187, 134, 252) !important;
+}
+
+.mat-sort-header-arrow .mat-sort-header-stem,
+.mat-sort-header-arrow .mat-sort-header-indicator,
+.mat-sort-header-arrow .mat-sort-header-pointer-left,
+.mat-sort-header-arrow .mat-sort-header-pointer-right,
+.mat-sort-header-arrow .mat-sort-header-pointer-middle {
+  background-color: rgb(187, 134, 252) !important;
+}
+
+.mat-mdc-form-field input {
+  color: rgb(255, 255, 255) !important; 
+  caret-color: rgb(187, 134, 252) !important;
+}
+
+.mat-mdc-form-field textarea {
+  color: rgb(255, 255, 255) !important;
+}
+
+.mat-mdc-paginator, 
+.mat-mdc-paginator .mat-mdc-select-value,
+.mat-mdc-paginator .mat-mdc-paginator-range-label {
+  color: rgb(255, 255, 255) !important;
+}
+
+.mat-mdc-paginator .mat-mdc-select-arrow svg {
+  fill: rgba(255, 255, 255, 0.7) !important;
+}
+
+.mat-mdc-select-value {
+  color: #fff !important;
+}
+
+.mat-mdc-select-panel {
+  background-color: #1e1e1e !important;
+  border: 1px solid #4a4a52 !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background-color: rgba(25, 118, 210, 0.3) !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text {
+  color: #fff !important;
+}
+
+.mat-mdc-option:focus:not(.mdc-list-item--disabled),
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mat-mdc-option .mdc-list-item__primary-text {
+  color: rgb(255, 255, 255) !important;
+}
+
+.mat-mdc-form-field input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+mat-error {
+  color: rgb(255, 82, 82) !important; 
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #2e7d32 !important;
+  --mat-snack-bar-button-color: #fff !important;
+}
+
+.snackbar-success .mdc-snackbar__surface {
+  background-color: #2e7d32 !important;
+}
+
+.snackbar-success .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #c62828 !important;
+  --mat-snack-bar-button-color: #fff !important;
+}
+
+.snackbar-error .mdc-snackbar__surface {
+  background-color: #c62828 !important;
+}
+
+.snackbar-error .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+

@@ -1,0 +1,100 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search connections</mat-label>
+    <input matInput placeholder="Search by consumer or meter..." [formControl]="searchControl">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="showCreateForm()">New Connection</button>
+</div>
+
+<div class="table-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <table mat-table [dataSource]="dataSource" matSort class="data-table">
+      
+      <!-- Consumer Column -->
+      <ng-container matColumnDef="consumerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Consumer</th>
+        <td mat-cell *matCellDef="let conn">{{ conn.consumerName }}</td>
+      </ng-container>
+
+      <!-- Utility Column -->
+      <ng-container matColumnDef="utilityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Utility</th>
+        <td mat-cell *matCellDef="let conn">{{ conn.utilityName }}</td>
+      </ng-container>
+
+      <!-- Meter Number Column -->
+      <ng-container matColumnDef="meterNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Meter Number</th>
+        <td mat-cell *matCellDef="let conn">{{ conn.meterNumber }}</td>
+      </ng-container>
+
+      <!-- Tariff Plan Column -->
+      <ng-container matColumnDef="tariffName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tariff Plan</th>
+        <td mat-cell *matCellDef="let conn">{{ conn.tariffName }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let conn">
+          <mat-chip [class.status-active]="conn.status === 'Active'" [class.status-inactive]="conn.status === 'Inactive'">
+            {{ conn.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let conn">
+          <div class="action-buttons">
+            <button mat-icon-button class="edit-btn" (click)="showEditForm(conn)" matTooltip="Edit Connection">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button 
+              [class.toggle-suspend]="conn.status === 'Active'"
+              [class.toggle-activate]="conn.status === 'Inactive'"
+              (click)="toggleStatus(conn)"
+              [matTooltip]="conn.status === 'Active' ? 'Suspend Connection' : 'Activate Connection'">
+              <mat-icon>{{ conn.status === 'Active' ? 'block' : 'check_circle' }}</mat-icon>
+            </button>
+            <button mat-icon-button class="delete-btn" (click)="deleteConnection(conn)" matTooltip="Delete Connection">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Empty State -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <div class="no-data">No consumer connections found.</div>
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+</div>
+
+@if (isFormVisible() && (formData$ | async); as data) {
+  <app-connection-form
+    [connection]="selectedConnection()" 
+    [consumers]="data.consumers"
+    [utilities]="data.utilities"
+    [tariffs]="data.tariffs"
+    (close)="hideForm()"
+    (save)="handleSave($event)">
+  </app-connection-form>
+}

@@ -1,0 +1,66 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\KIIT\\Desktop\\Utility Billing System\\Backend\\UtilityBillingSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AEBA368C-A9F5-808E-BEE2-F61FC9BEE6F4}|UtilityBillingSystem\\UtilityBillingSystem.csproj|c:\\users\\kiit\\desktop\\utility billing system\\backend\\utilitybillingsystem\\utilitybillingsystem\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEBA368C-A9F5-808E-BEE2-F61FC9BEE6F4}|UtilityBillingSystem\\UtilityBillingSystem.csproj|solutionrelative:utilitybillingsystem\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEBA368C-A9F5-808E-BEE2-F61FC9BEE6F4}|UtilityBillingSystem\\UtilityBillingSystem.csproj|c:\\users\\kiit\\desktop\\utility billing system\\backend\\utilitybillingsystem\\utilitybillingsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEBA368C-A9F5-808E-BEE2-F61FC9BEE6F4}|UtilityBillingSystem\\UtilityBillingSystem.csproj|solutionrelative:utilitybillingsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f4e46f1e-cf83-40aa-b568-a627394bc994}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\KIIT\\Desktop\\Utility Billing System\\Backend\\UtilityBillingSystem\\UtilityBillingSystem\\Mappings\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "UtilityBillingSystem\\Mappings\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\KIIT\\Desktop\\Utility Billing System\\Backend\\UtilityBillingSystem\\UtilityBillingSystem\\Mappings\\MappingProfile.cs",
+              "RelativeToolTip": "UtilityBillingSystem\\Mappings\\MappingProfile.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-05T17:29:23.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\KIIT\\Desktop\\Utility Billing System\\Backend\\UtilityBillingSystem\\UtilityBillingSystem\\Program.cs",
+              "RelativeDocumentMoniker": "UtilityBillingSystem\\Program.cs",
+              "ToolTip": "C:\\Users\\KIIT\\Desktop\\Utility Billing System\\Backend\\UtilityBillingSystem\\UtilityBillingSystem\\Program.cs",
+              "RelativeToolTip": "UtilityBillingSystem\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-05T03:25:50.421Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>{{ isEditMode() ? 'Edit Tariff Plan' : 'Create Tariff Plan' }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </header>
+    <form [formGroup]="tariffForm" (ngSubmit)="onSubmit()" class="tariff-form" novalidate>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Plan Name</mat-label>
+          <input matInput formControlName="name">
+          <mat-error *ngIf="tariffForm.get('name')?.hasError('required')">
+            Plan name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Utility Type</mat-label>
+          <mat-select formControlName="utilityTypeId">
+            <mat-option disabled>Select a utility</mat-option>
+            @for (utility of utilities(); track utility.id) {
+              <mat-option [value]="utility.id">{{ utility.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="tariffForm.get('utilityTypeId')?.hasError('required')">
+            Utility type is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Base Rate (per unit)</mat-label>
+          <input matInput type="number" formControlName="baseRate" min="0" step="0.01">
+          <mat-error *ngIf="tariffForm.get('baseRate')?.hasError('required')">
+            Base rate is required
+          </mat-error>
+          <mat-error *ngIf="tariffForm.get('baseRate')?.hasError('min')">
+            Base rate must be at least 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fixed Monthly Charge</mat-label>
+          <input matInput type="number" formControlName="fixedCharge" min="0" step="0.01">
+          <mat-error *ngIf="tariffForm.get('fixedCharge')?.hasError('required')">
+            Fixed charge is required
+          </mat-error>
+          <mat-error *ngIf="tariffForm.get('fixedCharge')?.hasError('min')">
+            Fixed charge must be at least 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-span">
+          <mat-label>Tax Percentage (%)</mat-label>
+          <input matInput type="number" formControlName="taxPercentage" min="0" max="100" step="0.1">
+          <mat-error *ngIf="tariffForm.get('taxPercentage')?.hasError('required')">
+            Tax percentage is required
+          </mat-error>
+          <mat-error *ngIf="tariffForm.get('taxPercentage')?.hasError('min')">
+            Tax percentage must be at least 0
+          </mat-error>
+          <mat-error *ngIf="tariffForm.get('taxPercentage')?.hasError('max')">
+            Tax percentage cannot exceed 100
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <footer class="modal-footer">
+        <button mat-button type="button" (click)="onClose()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="tariffForm.invalid">
+          {{ isEditMode() ? 'Update Plan' : 'Create Plan' }}
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>

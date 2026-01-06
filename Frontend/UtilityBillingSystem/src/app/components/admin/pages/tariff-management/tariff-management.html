@@ -1,0 +1,160 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search tariffs</mat-label>
+    <input matInput placeholder="Search by plan name or utility..." [formControl]="searchControl">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="showCreateForm()">Create Tariff Plan</button>
+</div>
+
+<div class="content-wrapper">
+  <div class="content-section">
+    <h2>Active Tariffs</h2>
+    <div class="table-container">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="activeDataSource" matSort #activeSort="matSort" class="data-table">
+        
+        <!-- Plan Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan Name</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.name }}</td>
+        </ng-container>
+
+        <!-- Utility Column -->
+        <ng-container matColumnDef="utilityName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Utility</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.utilityName }}</td>
+        </ng-container>
+
+        <!-- Base Rate Column -->
+        <ng-container matColumnDef="baseRate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Base Rate</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.baseRate | currency:'INR' }} / unit</td>
+        </ng-container>
+
+        <!-- Fixed Charge Column -->
+        <ng-container matColumnDef="fixedCharge">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fixed Charge</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.fixedCharge | currency:'INR' }}</td>
+        </ng-container>
+
+        <!-- Tax Column -->
+        <ng-container matColumnDef="taxPercentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.taxPercentage }}%</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let tariff">
+            <div class="action-buttons">
+              <button mat-icon-button class="edit-btn" (click)="showEditForm(tariff)" matTooltip="Edit Tariff">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="delete-btn" (click)="deleteTariff(tariff)" matTooltip="Delete Tariff">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Empty State -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div class="no-data">No active tariffs found.</div>
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator 
+        #activePaginator
+        [pageSizeOptions]="[5, 10, 25, 50]" 
+        showFirstLastButtons>
+      </mat-paginator>
+    }
+  </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Historical Tariffs</h2>
+    <div class="table-container">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="historicalDataSource" matSort #historicalSort="matSort" class="data-table historical-table">
+        
+        <!-- Plan Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan Name</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.name }}</td>
+        </ng-container>
+
+        <!-- Utility Column -->
+        <ng-container matColumnDef="utilityName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Utility</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.utilityName }}</td>
+        </ng-container>
+
+        <!-- Base Rate Column -->
+        <ng-container matColumnDef="baseRate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Base Rate</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.baseRate | currency:'INR' }} / unit</td>
+        </ng-container>
+
+        <!-- Fixed Charge Column -->
+        <ng-container matColumnDef="fixedCharge">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fixed Charge</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.fixedCharge | currency:'INR' }}</td>
+        </ng-container>
+
+        <!-- Tax Column -->
+        <ng-container matColumnDef="taxPercentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.taxPercentage }}%</td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created On</th>
+          <td mat-cell *matCellDef="let tariff">{{ tariff.createdAt | date:'mediumDate' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="historicalColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: historicalColumns;"></tr>
+
+        <!-- Empty State -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="historicalColumns.length">
+            <div class="no-data">No historical tariffs found.</div>
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator 
+        #historicalPaginator
+        [pageSizeOptions]="[5, 10, 25, 50]" 
+        showFirstLastButtons>
+      </mat-paginator>
+    }
+  </div>
+  </div>
+</div>
+
+
+@if (isFormVisible()) {
+  <app-tariff-form
+    [tariff]="selectedTariff()"
+    [utilities]="(utilities$ | async)!"
+    (close)="hideForm()"
+    (save)="handleSave($event)">
+  </app-tariff-form>
+}

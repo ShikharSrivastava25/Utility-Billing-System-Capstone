@@ -1,0 +1,98 @@
+<div class="page-container">
+  <div class="header-actions">
+    <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [formControl]="searchControl" placeholder="Search bills...">
+    </mat-form-field>
+  </div>
+
+  <div class="bill-table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="bill-table">
+      <ng-container matColumnDef="month">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Month </th>
+        <td mat-cell *matCellDef="let bill"> {{bill.month}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="utility">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Utility </th>
+        <td mat-cell *matCellDef="let bill"> {{bill.utilityType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="units">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
+        <td mat-cell *matCellDef="let bill"> {{bill.units}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td mat-cell *matCellDef="let bill"> {{bill.amount | currency:'INR'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let bill">
+          <mat-chip [class]="'status-chip ' + bill.status.toLowerCase()">
+            {{bill.status}}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
+        <td mat-cell *matCellDef="let bill"> {{bill.dueDate | date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let bill">
+          <button mat-raised-button color="primary" class="pay-btn" *ngIf="bill.status === 'Generated' || bill.status === 'Due' || bill.status === 'Overdue'" (click)="openPaymentDialog(bill)">
+            Pay Now
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Select page of bills"></mat-paginator>
+  </div>
+</div>
+
+<ng-template #paymentDialog>
+  <h2 mat-dialog-title>Pay Bill - {{selectedBill()?.month}}</h2>
+  <mat-dialog-content>
+    <form [formGroup]="paymentForm" class="payment-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Method</mat-label>
+        <mat-select formControlName="paymentMethod">
+          <mat-option value="Cash">Cash</mat-option>
+          <mat-option value="Online">Online</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      @if (paymentForm.get('paymentMethod')?.value === 'Cash') {
+        <mat-form-field appearance="outline">
+          <mat-label>Receipt Number</mat-label>
+          <input matInput formControlName="receiptNumber" placeholder="Enter receipt number">
+          @if (paymentForm.get('receiptNumber')?.hasError('required')) {
+            <mat-error>Receipt number is required</mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (paymentForm.get('paymentMethod')?.value === 'Online') {
+        <mat-form-field appearance="outline">
+          <mat-label>UPI ID</mat-label>
+          <input matInput formControlName="upiId" placeholder="example@upi">
+          @if (paymentForm.get('upiId')?.hasError('required')) {
+            <mat-error>UPI ID is required</mat-error>
+          }
+        </mat-form-field>
+      }
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="paymentForm.invalid" (click)="processPayment()">Confirm Payment</button>
+  </mat-dialog-actions>
+</ng-template>

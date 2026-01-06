@@ -1,0 +1,47 @@
+<div class="reports-dashboard">
+  <header class="reports-header">
+    <h2>Dashboard Overview</h2>
+  </header>
+
+  @if (summary$ | async; as summary) {
+    <div class="summary-grid">
+      <app-summary-card 
+        title="Active Billing Officers" 
+        [value]="summary.activeBillingOfficers"
+        icon="people"
+        theme="pink">
+      </app-summary-card>
+      <app-summary-card 
+        title="Active Account Officers" 
+        [value]="summary.activeAccountOfficers"
+        icon="people"
+        theme="orange">
+      </app-summary-card>
+      <app-summary-card 
+        title="Active Consumers" 
+        [value]="summary.totalConsumers"
+        icon="people"
+        theme="blue">
+      </app-summary-card>
+      <app-summary-card 
+        title="Pending Utility Requests" 
+        [value]="summary.pendingUtilityRequests"
+        icon="pending"
+        theme="yellow">
+      </app-summary-card>
+    </div>
+  } @else {
+    <div class="loading">Loading summary...</div>
+  }
+
+  <div class="full-width-report">
+    <div class="report-widget">
+      <h3>Connections by Utility</h3>
+      @if (connectionsByUtility$ | async; as connectionsData) {
+        <app-connections-chart [data]="connectionsData"></app-connections-chart>
+      } @else {
+        <div class="placeholder-chart">Loading chart data...</div>
+      }
+    </div>
+  </div>
+</div>

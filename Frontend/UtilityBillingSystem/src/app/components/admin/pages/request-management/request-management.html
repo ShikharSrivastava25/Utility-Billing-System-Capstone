@@ -1,0 +1,93 @@
+<div class="header-actions">
+  <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [formControl]="searchControl" placeholder="Search requests...">
+  </mat-form-field>
+</div>
+
+<div class="table-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <table mat-table [dataSource]="dataSource" matSort class="data-table">
+      
+      <!-- Consumer Column -->
+      <ng-container matColumnDef="consumerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Consumer</th>
+        <td mat-cell *matCellDef="let req">{{ req.consumerName }}</td>
+      </ng-container>
+
+      <!-- Consumer ID Column -->
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Consumer ID</th>
+        <td mat-cell *matCellDef="let req">{{ req.userId }}</td>
+      </ng-container>
+
+      <!-- Service Requested Column -->
+      <ng-container matColumnDef="utilityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Service Requested</th>
+        <td mat-cell *matCellDef="let req">{{ req.utilityName }}</td>
+      </ng-container>
+
+      <!-- Request Date Column -->
+      <ng-container matColumnDef="requestDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Request Date</th>
+        <td mat-cell *matCellDef="let req">{{ req.requestDate | date:'medium' }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let req">
+          <mat-chip 
+            [class.chip-pending]="req.status === 'Pending'"
+            [class.chip-approved]="req.status === 'Approved'"
+            [class.chip-rejected]="req.status === 'Rejected'">
+            {{ req.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let req">
+          @if (req.status === 'Pending') {
+            <div class="action-buttons">
+              <button mat-button class="approve-btn" (click)="showApprovalForm(req)">Approve</button>
+              <button mat-button class="reject-btn" (click)="handleRejection(req)">Reject</button>
+            </div>
+          } @else {
+            <span class="processed-text">Processed</span>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Empty State -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <div class="no-data">No pending utility requests.</div>
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+  }
+</div>
+
+@if (isApprovalFormVisible() && selectedRequest()) {
+  <app-request-approval-form
+    [request]="selectedRequest()!"
+    [tariffs]="(activeTariffs$ | async)!"
+    (close)="hideForms()"
+    (save)="handleApproval($event)">
+  </app-request-approval-form>
+}

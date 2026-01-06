@@ -1,0 +1,39 @@
+<div class="overdue-bills-container">
+  @if (bills() && bills().length > 0) {
+    <table mat-table [dataSource]="bills()" matSort class="overdue-table">
+      
+      <ng-container matColumnDef="consumerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Consumer</th>
+        <td mat-cell *matCellDef="let bill">{{ bill.consumerName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="utilityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Utility</th>
+        <td mat-cell *matCellDef="let bill">{{ bill.utilityName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+        <td mat-cell *matCellDef="let bill">{{ bill.amount | currency:'INR':'symbol':'1.0-0' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</th>
+        <td mat-cell *matCellDef="let bill">{{ bill.dueDate | date:'shortDate' }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" 
+                   [pageSize]="5"
+                   showFirstLastButtons>
+    </mat-paginator>
+  } @else {
+    <div class="no-bills">
+      No overdue bills found.
+    </div>
+  }
+</div>
+

@@ -1,0 +1,167 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #2c2c34;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  animation: slide-down 0.3s ease-out;
+}
+
+@media (max-width: 1280px) {
+  .modal-content {
+    max-width: 450px;
+  }
+  
+  .modal-header {
+    padding: 14px 20px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.15rem;
+  }
+  
+  .request-details {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .approval-form {
+    padding: 20px;
+    gap: 12px;
+  }
+  
+  .modal-footer {
+    padding: 14px 20px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .modal-content {
+    max-width: 600px;
+  }
+  
+  .modal-header {
+    padding: 20px 32px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .request-details {
+    padding: 20px 32px;
+    font-size: 1rem;
+  }
+  
+  .approval-form {
+    padding: 32px;
+    gap: 20px;
+  }
+  
+  .modal-footer {
+    padding: 20px 32px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #4a4a52;
+  color: #fff;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.request-details {
+  padding: 16px 24px;
+  background-color: #1f1f23;
+  color: #ccc;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid #4a4a52;
+}
+
+.approval-form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.approval-form mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.approval-form mat-error {
+  margin-bottom: 8px;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background-color: #2c2c34;
+}
+
+::ng-deep .mat-mdc-option {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: #383842 !important;
+}
+
+::ng-deep .mat-mdc-select-value {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: #e0e0e0 !important;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #4a4a52;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

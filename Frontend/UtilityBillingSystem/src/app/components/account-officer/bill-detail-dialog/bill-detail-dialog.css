@@ -1,0 +1,176 @@
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: #1e1e1e !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .mat-mdc-dialog-title {
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 24px !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 !important;
+}
+
+::ng-deep .mat-mdc-dialog-title mat-icon {
+  color: #bb86fc;
+}
+
+::ng-deep .mat-mdc-dialog-content {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-list-item {
+  height: auto !important;
+  padding: 12px 24px !important;
+}
+
+::ng-deep .mat-mdc-list-item-title {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 4px !important;
+}
+
+::ng-deep .mat-mdc-list-item-line {
+  color: #fff !important;
+  font-size: 1rem !important;
+}
+
+.total-row {
+  background-color: rgba(187, 134, 252, 0.05);
+}
+
+.total-value {
+  color: #bb86fc !important;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
+}
+
+mat-divider {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.status-chip {
+  font-weight: 700 !important;
+  font-size: 0.7rem !important;
+  height: 22px !important;
+  padding: 4px 10px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #fff !important;
+}
+
+.status-chip.paid {
+  background-color: #4caf50 !important;
+}
+
+.status-chip.due {
+  background-color: #ff9800 !important;
+}
+
+.status-chip.overdue {
+  background-color: #f44336 !important;
+}
+
+::ng-deep .mat-mdc-chip.status-chip {
+  --mdc-chip-label-text-color: #fff !important;
+}
+
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__text-label,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__action,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__action-label,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__cell,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__cell--primary,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__action--primary,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__action--primary .mdc-evolution-chip__action-label,
+::ng-deep .mat-mdc-chip.status-chip .mdc-evolution-chip__action--primary .mdc-evolution-chip__text-label {
+  color: #fff !important;
+}
+
+mat-chip-set {
+  margin-top: -10px !important;
+  display: block !important;
+  min-height: unset !important;
+}
+
+::ng-deep .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-dialog-actions {
+  padding: 16px 24px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 8px;
+}
+
+::ng-deep .mat-mdc-dialog-actions button mat-icon {
+  margin-right: 4px;
+}
+
+@media (max-width: 1280px) {
+  ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    max-width: 480px !important;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-title {
+    padding: 12px 20px !important;
+    font-size: 1.2rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item {
+    padding: 10px 20px !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item-title {
+    font-size: 0.8rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item-line {
+    font-size: 0.95rem !important;
+  }
+  
+  .total-value {
+    font-size: 1.1rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 12px 20px !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    max-width: 600px !important;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-title {
+    padding: 20px 32px !important;
+    font-size: 1.6rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item {
+    padding: 16px 32px !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item-title {
+    font-size: 0.9rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item-line {
+    font-size: 1.1rem !important;
+  }
+  
+  .total-value {
+    font-size: 1.4rem !important;
+  }
+  
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 20px 32px !important;
+  }
+}
+

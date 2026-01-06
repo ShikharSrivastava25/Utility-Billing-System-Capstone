@@ -1,0 +1,83 @@
+<div class="dashboard-container">
+  <div class="welcome-section">
+    <p>Here's an overview of your utility accounts.</p>
+  </div>
+
+  <div class="stats-grid">
+    <mat-card class="summary-card pink">
+      <mat-card-content>
+        <div class="card-layout">
+          <div class="card-content">
+            <p class="title">Total Outstanding</p>
+            <div class="value">
+              <span>{{ totalOutstanding() | currency:'INR':'symbol':'1.0-2' }}</span>
+            </div>
+          </div>
+          <div class="card-icon">
+            <span>₹</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card orange">
+      <mat-card-content>
+        <div class="card-layout">
+          <div class="card-content">
+            <p class="title">Spending This Month</p>
+            <div class="value">
+              <span>{{ monthlySpending() | currency:'INR':'symbol':'1.0-2' }}</span>
+            </div>
+          </div>
+          <div class="card-icon">
+            <span>₹</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card blue">
+      <mat-card-content>
+        <div class="card-layout">
+          <div class="card-content">
+            <p class="title">Active Connections</p>
+            <div class="value">
+              <span>{{ activeConnections() }}</span>
+            </div>
+          </div>
+          <div class="card-icon">
+            <span>👥</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card green">
+      <mat-card-content>
+        <div class="card-layout">
+          <div class="card-content">
+            <p class="title">Due Bills</p>
+            <div class="value">
+              <span>{{ dueBills() }}</span>
+            </div>
+          </div>
+          <div class="card-icon">
+            <span>📄</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="chart-section">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Consumption Trend</mat-card-title>
+        <mat-card-subtitle>Monthly usage across all utilities</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div #chartContainer class="chart-container"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

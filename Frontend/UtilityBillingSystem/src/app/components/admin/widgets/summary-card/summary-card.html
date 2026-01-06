@@ -1,0 +1,27 @@
+<mat-card [class]="cardClasses()">
+  <mat-card-content>
+    <div class="card-layout">
+      <div class="card-content">
+        <p class="title">{{ title() }}</p>
+        <div class="value">
+          @if (icon() === 'currency') {
+            <span>{{ value() | currency:'INR':'symbol':'1.0-0' }}</span>
+          } @else {
+            <span>{{ value() }}</span>
+          }
+          @if (unit()) {
+            <span class="unit">{{ unit() }}</span>
+          }
+        </div>
+      </div>
+      <div class="card-icon">
+        @switch(icon()) {
+          @case('currency') { <span>₹</span> }
+          @case('people') { <span>👥</span> }
+          @case('bolt') { <span>⚡️</span> }
+          @case('pending') { <span>⏳</span> }
+        }
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

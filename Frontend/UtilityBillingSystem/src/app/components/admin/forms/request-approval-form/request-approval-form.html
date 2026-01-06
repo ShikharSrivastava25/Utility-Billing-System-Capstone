@@ -1,0 +1,46 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>Approve Service Request</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </header>
+    
+    <div class="request-details">
+      <div><strong>Consumer:</strong> {{ request().consumerName }}</div>
+      <div><strong>Service:</strong> {{ request().utilityName }}</div>
+      <div><strong>Requested On:</strong> {{ request().requestDate | date:'medium' }}</div>
+    </div>
+    
+    <form [formGroup]="approvalForm" (ngSubmit)="onSubmit()" class="approval-form" novalidate>
+      <mat-form-field appearance="outline">
+        <mat-label>Assign Tariff Plan</mat-label>
+        <mat-select formControlName="tariffId">
+          @for (tariff of availableTariffs(); track tariff.id) {
+            <mat-option [value]="tariff.id">{{ tariff.name }}</mat-option>
+          }
+          @if (availableTariffs().length === 0) {
+            <mat-option disabled>No active tariffs for this utility</mat-option>
+          }
+        </mat-select>
+        <mat-error *ngIf="approvalForm.get('tariffId')?.hasError('required')">
+          Please select a tariff plan
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Assign Meter Number</mat-label>
+        <input matInput formControlName="meterNumber" type="text">
+        <mat-error *ngIf="approvalForm.get('meterNumber')?.hasError('required')">
+          Meter number is required
+        </mat-error>
+      </mat-form-field>
+      
+      <footer class="modal-footer">
+        <button type="button" mat-raised-button (click)="onClose()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="approvalForm.invalid">
+          Approve & Create Connection
+        </button>
+      </footer>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,177 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 1280px) {
+  .page-container {
+    gap: 20px;
+  }
+  
+  .header-actions {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .page-container {
+    gap: 32px;
+  }
+  
+  .header-actions {
+    gap: 20px;
+  }
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (max-width: 1280px) {
+  .search-field {
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .search-field {
+    max-width: 450px;
+  }
+}
+
+.status-toggle {
+  border: 1px solid #4a4a52 !important;
+  background-color: #2c2c34 !important;
+}
+
+::ng-deep .status-toggle .mat-button-toggle {
+  color: #e0e0e0 !important;
+  background-color: transparent !important;
+}
+
+::ng-deep .status-toggle .mat-button-toggle-checked {
+  background-color: #fb8c00 !important;
+  color: #fff !important;
+}
+
+.table-container {
+  position: relative;
+  background-color: #2c2c34;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid #4a4a52;
+}
+
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outstanding-table {
+  width: 100%;
+  background: transparent !important;
+}
+
+::ng-deep .outstanding-table .mat-mdc-header-cell {
+  background-color: #383842 !important;
+  color: #fff !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px !important;
+  border-bottom: 1px solid #4a4a52 !important;
+}
+
+::ng-deep .outstanding-table .mat-mdc-cell {
+  color: #e0e0e0 !important;
+  padding: 16px !important;
+  border-bottom: 1px solid #4a4a52 !important;
+}
+
+::ng-deep .outstanding-table .mat-sort-header-arrow {
+  color: #fff !important;
+}
+
+.outstanding-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.status-chip {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-chip.due {
+  background-color: rgba(33, 150, 243, 0.15);
+  color: #2196f3;
+  border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+.status-chip.overdue {
+  background-color: rgba(244, 67, 54, 0.15);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+::ng-deep .mat-mdc-paginator {
+  background-color: #2c2c34 !important;
+  color: #e0e0e0 !important;
+  border-top: 1px solid #4a4a52 !important;
+}
+
+/* Style action buttons and icons for visibility */
+.action-button {
+  color: #e0e0e0 !important;
+}
+
+.action-button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.action-button .mat-icon {
+  color: #e0e0e0 !important;
+}
+
+.action-button:hover .mat-icon {
+  color: #fff !important;
+}
+
+/* Alternative approach using ng-deep if needed */
+::ng-deep .outstanding-table .mat-mdc-icon-button {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .outstanding-table .mat-mdc-icon-button:hover {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+::ng-deep .outstanding-table .mat-mdc-icon-button .mat-icon {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .outstanding-table .mat-mdc-icon-button:hover .mat-icon {
+  color: #fff !important;
+}

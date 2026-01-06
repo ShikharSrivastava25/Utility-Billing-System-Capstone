@@ -1,0 +1,58 @@
+.overdue-bills-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #2c2c34;
+}
+
+.overdue-table {
+  width: 100%;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  background-color: #2c2c34;
+}
+
+.overdue-table th {
+  background-color: #383842 !important;
+  color: #fff !important;
+  font-weight: 500;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.overdue-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #4a4a52;
+  color: #e0e0e0 !important;
+  background-color: #2c2c34;
+}
+
+.overdue-table tr.mat-mdc-row {
+  background-color: #2c2c34 !important;
+}
+
+.overdue-table tr.mat-mdc-row:hover {
+  background-color: #34343c !important;
+}
+
+::ng-deep .overdue-bills-container .mat-mdc-paginator {
+  background-color: #2c2c34 !important;
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .overdue-bills-container .mat-mdc-paginator .mat-mdc-select-value,
+::ng-deep .overdue-bills-container .mat-mdc-paginator .mat-mdc-paginator-range-label {
+  color: #e0e0e0 !important;
+}
+
+::ng-deep .overdue-bills-container .mat-mdc-paginator .mat-mdc-icon-button {
+  color: #e0e0e0 !important;
+}
+
+.no-bills {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #8a8a93;
+}
+

@@ -1,0 +1,103 @@
+<h2 mat-dialog-title>
+  <mat-icon>receipt</mat-icon>
+  <span>Bill Details</span>
+</h2>
+
+<mat-dialog-content>
+  <mat-list>
+    <mat-list-item>
+      <span matListItemTitle>Consumer</span>
+      <span matListItemLine>{{ data.consumerName }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Utility</span>
+      <span matListItemLine>{{ data.utilityName }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Meter Number</span>
+      <span matListItemLine>{{ data.meterNumber }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Billing Period</span>
+      <span matListItemLine>{{ data.billingPeriod }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Generation Date</span>
+      <span matListItemLine>{{ data.generationDate | date:'mediumDate' }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Due Date</span>
+      <span matListItemLine>{{ data.dueDate | date:'mediumDate' }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Previous Reading</span>
+      <span matListItemLine>{{ data.previousReading }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Current Reading</span>
+      <span matListItemLine>{{ data.currentReading }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Consumption</span>
+      <span matListItemLine>{{ data.consumption }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Base Amount</span>
+      <span matListItemLine>{{ data.baseAmount | currency:'INR' }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Tax Amount</span>
+      <span matListItemLine>{{ data.taxAmount | currency:'INR' }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item *ngIf="getPenaltyAmount() > 0">
+      <span matListItemTitle>Penalty Amount</span>
+      <span matListItemLine>{{ getPenaltyAmount() | currency:'INR' }}</span>
+    </mat-list-item>
+    <mat-divider *ngIf="getPenaltyAmount() > 0"></mat-divider>
+
+    <mat-list-item class="total-row">
+      <span matListItemTitle>Total Amount</span>
+      <span matListItemLine class="total-value">{{ data.totalAmount | currency:'INR' }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <span matListItemTitle>Status</span>
+      <mat-chip-set matListItemLine>
+        <mat-chip [ngClass]="data.status.toLowerCase()" class="status-chip">
+          {{ data.status }}
+        </mat-chip>
+      </mat-chip-set>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="close()">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</mat-dialog-actions>
+

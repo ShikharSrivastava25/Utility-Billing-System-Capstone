@@ -1,0 +1,53 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>{{ isEditMode() ? 'Edit Utility Type' : 'Create Utility Type' }}</h2>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </header>
+    <form [formGroup]="utilityForm" (ngSubmit)="onSubmit()" class="utility-form" novalidate>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Utility Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="utilityForm.get('name')?.hasError('required')">
+          Utility name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="4"></textarea>
+        <mat-error *ngIf="utilityForm.get('description')?.hasError('required')">
+          Description is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Enabled">Enabled</mat-option>
+            <mat-option value="Disabled">Disabled</mat-option>
+          </mat-select>
+          <mat-error *ngIf="utilityForm.get('status')?.hasError('required')">
+            Status is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Billing Cycle</mat-label>
+          <mat-select formControlName="billingCycleId">
+            <mat-option value="">None</mat-option>
+            @for (cycle of billingCycles(); track cycle.id) {
+              <mat-option [value]="cycle.id">{{ cycle.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <footer class="modal-footer">
+        <button mat-button type="button" (click)="onClose()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="utilityForm.invalid">Save</button>
+      </footer>
+    </form>
+  </div>
+</div>
