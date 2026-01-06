@@ -96,7 +96,8 @@ namespace UtilityBillingSystem.Services
                 }
             }
 
-            return connectionsNeedingReadings;
+            return connectionsNeedingReadings
+                .OrderBy(c => c.ConsumerName, StringComparer.OrdinalIgnoreCase);
         }
 
         public async Task<decimal?> GetPreviousReadingAsync(string connectionId)

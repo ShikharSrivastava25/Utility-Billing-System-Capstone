@@ -6,6 +6,8 @@ C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\Utilit
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\UtilityBillingSystem.runtimeconfig.json
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\UtilityBillingSystem.dll
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\UtilityBillingSystem.pdb
+C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\Humanizer.dll
@@ -151,6 +153,3 @@ C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\Utilit
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\obj\Debug\net8.0\UtilityBillingSystem.pdb
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\obj\Debug\net8.0\UtilityBillingSystem.genruntimeconfig.cache
 C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\obj\Debug\net8.0\ref\UtilityBillingSystem.dll
-C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-C:\Users\KIIT\Desktop\Utility Billing System\Backend\UtilityBillingSystem\UtilityBillingSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

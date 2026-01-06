@@ -34,9 +34,8 @@ namespace UtilityBillingSystem.Services.Helpers
                 UpdateBillStatusInMemory(bill, now);
             }
 
-            // Calculate outstanding balance: sum of all unpaid bills (Generated, Due, Overdue)
-            // This represents the total amount owed by all consumers
             return unpaidBills
+                .Where(b => b.Status == "Due" || b.Status == "Overdue")
                 .Sum(b => b.TotalAmount);
         }
 
