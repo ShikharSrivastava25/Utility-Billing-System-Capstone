@@ -120,9 +120,15 @@ export class UserManagement implements OnInit {
   toggleStatus(user: User) {
     const newStatus = user.status === 'Active' ? 'Inactive' : 'Active';
     const updatedUser = { ...user, status: newStatus as 'Active' | 'Inactive' };
-    this.userService.updateUser(updatedUser).subscribe(() => {
+    this.userService.updateUser(updatedUser).subscribe({
+      next: () => {
         this.notificationService.show(`User '${user.name}' is now ${newStatus}.`);
         this.loadUsers();
+      },
+      error: (err) => {
+        const message = err.error?.error?.message || 'Failed to update user status. Please try again.';
+        this.notificationService.show(message, 'error');
+      }
     });
   }
 
