@@ -116,6 +116,10 @@ namespace UtilityBillingSystem.Services
                 var currentRoles = await _userManager.GetRolesAsync(user);
                 if (dto.Role != currentRoles.FirstOrDefault())
                     throw new InvalidOperationException("Cannot change your own role");
+                
+                // Prevent admin from deactivating their own account
+                if (user.Status != "Inactive" && dto.Status == "Inactive")
+                    throw new InvalidOperationException("Cannot deactivate your own account");
             }
 
             if (dto.Status == "Deleted")
